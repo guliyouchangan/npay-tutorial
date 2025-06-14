@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>商城使用教程</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      background: #f7f8fa; 
+      font-family: 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif; 
+      color: #222; 
+      line-height: 1.6;
+    }
+    
+    /* 顶部整体容器 */
+    .header-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    /* 顶部导航栏 */
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 16px 0;
+    }
+    
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .logo-section {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo {
+      height: 32px;
+      margin-right: 12px;
+    }
+    
+    .main-title {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    
+    /* Tab导航 */
+    .tab-nav {
+      background: white;
+      border-bottom: 1px solid #e0e6ed;
+      padding: 0;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    
+    .tab-nav::-webkit-scrollbar {
+      height: 2px;
+    }
+    
+    .tab-nav::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 2px;
+    }
+    
+    .tab-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 16px 20px;
+      cursor: pointer;
+      font-size: 15px;
+      color: #666;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      position: relative;
+      flex: 1;
+      text-align: center;
+    }
+    
+    .tab-btn:hover {
+      color: #3a7afe;
+      background: #f8f9ff;
+    }
+    
+    .tab-btn.active {
+      color: #3a7afe;
+      border-bottom-color: #3a7afe;
+      font-weight: 600;
+    }
+    
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 3px;
+      background: #3a7afe;
+      border-radius: 2px;
+    }
+    
+    /* 内容区域 */
+    .content-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 16px 0 16px;
+    }
+    
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* 步骤样式 */
+    .step {
+      background: white;
+      border-radius: 12px;
+      margin: 20px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding: 24px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .step:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    
+    .step-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #2a3b5a;
+      display: flex;
+      align-items: center;
+    }
+    
+    .step-number {
+      background: linear-gradient(135deg, #3a7afe, #667eea);
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+      margin-right: 12px;
+    }
+    
+    .step-img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 8px;
+      border: 2px solid #e0e6ed;
+      margin: 16px 0;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .desc {
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 8px;
+      color: #444;
+    }
+    
+    .highlight {
+      color: #3a7afe;
+      font-weight: bold;
+    }
+    
+    .tip {
+      background: #fff8e1;
+      border-left: 4px solid #ffa726;
+      padding: 12px 16px;
+      margin-top: 12px;
+      border-radius: 0 6px 6px 0;
+      font-size: 14px;
+      color: #e65100;
+    }
+    
+    .complaint-tip {
+      background: #ffebee;
+      border-left: 4px solid #e53935;
+      padding: 12px 16px;
+      margin-top: 12px;
+      border-radius: 0 6px 6px 0;
+      font-size: 14px;
+      color: #c62828;
+    }
+    
+    /* 底部 */
+    .footer {
+      text-align: center;
+      padding: 40px 20px 20px;
+      color: #888;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .footer img {
+      height: 24px;
+      margin-right: 8px;
+    }
+    
+    /* 占位章节样式 */
+    .placeholder-chapter {
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+    }
+    
+    .placeholder-chapter .icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .main-title {
+        font-size: 18px;
+        margin-top: 8px;
+      }
+      
+
+      
+      .tab-btn {
+        padding: 12px 16px;
+        font-size: 14px;
+      }
+      
+      .step {
+        margin: 16px 0;
+        padding: 20px 16px;
+      }
+      
+      .step-img {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部标题栏和导航 -->
+  <div class="header-wrapper">
+    <div class="header">
+      <div class="header-content">
+        <div class="logo-section">
+          <img src="https://i.ibb.co/RpCvs1Vm/NLogo-1.png" alt="NPay Logo" class="logo">
+                      <div class="main-title">使用教程</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab导航栏 -->
+    <nav class="tab-nav">
+      <div class="tab-container">
+        <button class="tab-btn active" data-tab="chapter1">购买N币</button>
+        <button class="tab-btn" data-tab="chapter2">出售N币</button>
+        <button class="tab-btn" data-tab="chapter3">提现</button>
+        <button class="tab-btn" data-tab="chapter4">兑换</button>
+        <button class="tab-btn" data-tab="chapter5">其他</button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- 内容区域 -->
+  <div class="content-container">
+    <!-- 第一章：购买N币教程 -->
+    <div class="tab-content active" id="chapter1">
+      <div class="step">
+        <div class="step-title">
+          <div class="step-number">1</div>
+          进入商城主页面
+        </div>
+        <img src="https://i.ibb.co/zTM0Wn3X/image.png" alt="商城主页面" class="step-img">
+        <div class="desc">在主页面可查看N币余额、出售、提现等功能。点击下方商品列表，选择需要购买的N币道具。</div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          <div class="step-number">2</div>
+          填写购买信息
+        </div>
+        <img src="https://i.ibb.co/XxN1yrJw/1.png" alt="填写购买信息" class="step-img">
+        <div class="desc">输入购买金额，选择付款方式，确认无误后点击"确认购买"按钮。</div>
+        <div class="tip">请确保金额填写正确，付款方式选择无误。</div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          <div class="step-number">3</div>
+          确认订单信息
+        </div>
+        <img src="https://i.ibb.co/WvFV2b0S/2.png" alt="确认订单信息" class="step-img">
+        <div class="desc">核对订单金额、数量、卖家信息及付款方式，确认无误后点击"前往付款"。如需取消订单，可点击右上角"取消订单"。</div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          <div class="step-number">4</div>
+          向卖家付款
+        </div>
+        <img src="https://i.ibb.co/3yTzsXXg/3.png" alt="向卖家付款" class="step-img">
+        <div class="desc">根据页面提示，完成转账后点击"上传凭证"按钮，上传您的付款截图。</div>
+        <div class="complaint-tip">如遇问题可点击右上角"订单投诉"联系客服。</div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          <div class="step-number">5</div>
+          上传付款凭证
+        </div>
+        <img src="https://i.ibb.co/hFxWkMW6/4.png" alt="上传付款凭证" class="step-img">
+        <div class="desc">凭证上传完成后，点击"我已上传凭证，完成付款"。</div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          <div class="step-number">6</div>
+          等待卖家核实
+        </div>
+        <img src="https://i.ibb.co/TDnQTGFk/7.png" alt="等待卖家核实" class="step-img">
+        <div class="desc">请耐心等待卖家确认收款。</div>
+        <div class="complaint-tip">如遇问题可点击右上角"订单投诉"联系客服。</div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          <div class="step-number">7</div>
+          订单完成
+        </div>
+        <img src="https://i.ibb.co/FkcGHKqd/8.png" alt="订单完成" class="step-img">
+        <div class="desc">卖家确认后，订单状态变为"已完成"，N币到账。</div>
+      </div>
+    </div>
+
+    <!-- 第二章：出售N币教程 -->
+    <div class="tab-content" id="chapter2">
+      <div class="step">
+        <div class="step-title">
+          <div class="step-number">1</div>
+          进入出售页面
+        </div>
+        <img src="https://i.ibb.co/Ng2fSBFb/image.png" alt="进入出售页面" class="step-img">
+        <div class="desc">找到"出售N币"功能，进入出售页面。</div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          <div class="step-number">2</div>
+          设置出售信息
+        </div>
+        <img src="https://i.ibb.co/8W5TFVS/1.png" alt="设置出售信息" class="step-img">
+        <div class="desc">填写需要出售的N币数量和价格，设置收款方式等信息。</div>
+        <div class="tip">请确保收款信息是本人信息。</div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          <div class="step-number">3</div>
+          等待买家下单付款
+        </div>
+        <img src="https://i.ibb.co/4wwZYJNx/5.png" alt="等待买家下单付款" class="step-img">
+        <div class="desc">订单发布后，等待买家下单付款片刻。</div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          <div class="step-number">4</div>
+          确认收款
+        </div>
+        <img src="https://i.ibb.co/Zpb351Q0/6.png" alt="确认收款" class="step-img">
+        <div class="desc">买家付款后，请及时确认收款。收到款项后点击"确认收款"按钮。</div>
+        <div class="complaint-tip">请确认实际收到款项后再点击确认，避免资金损失。</div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          <div class="step-number">5</div>
+          交易完成
+        </div>
+        <img src="https://i.ibb.co/wrrjswSY/7.png" alt="交易完成" class="step-img">
+        <div class="desc">确认收款后，系统会自动将N币转给买家，交易完成。</div>
+      </div>
+    </div>
+
+    <!-- 第三章：提现教程 -->
+    <div class="tab-content" id="chapter3">
+      <div class="step">
+        <div class="step-title">
+          <div class="step-number">1</div>
+          进入提现页面
+        </div>
+        <img src="https://i.ibb.co/Qzcd1df/image.png" alt="进入提现页面" class="step-img">
+        <div class="desc">点击提现功能，进入提现页面。</div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          <div class="step-number">2</div>
+          填写提现信息
+        </div>
+        <img src="https://i.ibb.co/qLjt9TPK/1.png" alt="填写提现信息" class="step-img">
+        <div class="desc">输入收款方式和提现金额。</div>
+        <div class="complaint-tip">提现功能使用特殊通道，为保证快速到账会收取一定手续费。</div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          <div class="step-number">3</div>
+          提现完成
+        </div>
+        <img src="https://i.ibb.co/CKJ5dVbY/3.png" alt="提现完成" class="step-img">
+        <div class="desc">等待几分钟后到账完成。</div>
+      </div>
+    </div>
+
+    <!-- 第四章：兑换教程 -->
+    <div class="tab-content" id="chapter4">
+      <div class="step">
+        <div class="step-title">
+          <div class="step-number">1</div>
+          进入兑换页面
+        </div>
+        <img src="https://i.ibb.co/F46cVvNk/1.png" alt="进入兑换页面" class="step-img">
+        <div class="desc">点击兑换筹码功能，进入兑换页面。</div>
+        <div class="tip">如余额不足，可点击右上角"前往Npay购买"进行充值。</div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          <div class="step-number">2</div>
+          填写兑换信息
+        </div>
+        <img src="https://i.ibb.co/Mk2PkMKC/2.png" alt="填写兑换信息" class="step-img">
+        <div class="desc">输入需要兑换的筹码数量，确认兑换到中心钱包。</div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          <div class="step-number">3</div>
+          兑换完成
+        </div>
+        <img src="https://i.ibb.co/67YRnWD2/3.png" alt="兑换完成" class="step-img">
+        <div class="desc">兑换完成后，刷新中心钱包即可查看到账的筹码。</div>
+      </div>
+    </div>
+
+    <!-- 第五章：其他教程 -->
+    <div class="tab-content" id="chapter5">
+      <div class="step">
+        <div class="step-title">
+          查看订单记录
+        </div>
+        <img src="https://i.ibb.co/G39jGLfd/2.png" alt="查看订单记录1" class="step-img">
+        <div class="desc">点击记事本图标，可查看所有历史交易记录。</div>
+        <img src="https://i.ibb.co/Q3q0L0fD/2.png" alt="查看订单记录2" class="step-img">
+        <div class="desc">订单记录包含五种类型：购买、出售、提现、提币、充币。</div>
+        <div class="tip">提币：中心钱包兑换到N币余额；充币：N币余额兑换到中心钱包。</div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          专属钱包地址
+        </div>
+        <img src="https://i.ibb.co/fGC2Hrw1/image.png" alt="专属钱包地址" class="step-img">
+        <div class="desc">每位用户都有专属的钱包地址，用于接收N币转账。</div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          进入设置页面
+        </div>
+        <img src="https://i.ibb.co/fVswcj7m/image.png" alt="进入设置页面1" class="step-img">
+        <div class="desc">点击右上角设置图标，进入个人设置页面。</div>
+        <img src="https://i.ibb.co/0jdYC77k/image.png" alt="进入设置页面2" class="step-img">
+        <div class="desc">在设置页面可以绑定手机号、设置支付密码、管理收款方式等个人信息。</div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          管理银行卡
+        </div>
+        <img src="https://i.ibb.co/5hGPJqW1/image.png" alt="管理银行卡1" class="step-img">
+        <div class="desc">向右滑动银行卡，可设置为默认收款账户。</div>
+        <img src="https://i.ibb.co/bM3hgK06/image.png" alt="管理银行卡2" class="step-img">
+        <div class="desc">向左滑动银行卡，可删除不需要的银行卡信息。</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 底部 -->
+  <div class="footer">
+    <img src="https://i.ibb.co/RpCvs1Vm/NLogo-1.png" alt="NPay Logo">
+    如有疑问请随时联系客服，客服竭诚为您服务。
+  </div>
+
+  <!-- JavaScript Tab切换功能 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      const tabContents = document.querySelectorAll('.tab-content');
+      
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const targetTab = this.getAttribute('data-tab');
+          
+          // 移除所有active状态
+          tabBtns.forEach(b => b.classList.remove('active'));
+          tabContents.forEach(c => c.classList.remove('active'));
+          
+          // 添加当前active状态
+          this.classList.add('active');
+          document.getElementById(targetTab).classList.add('active');
+          
+          // 滚动到顶部
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
+      
+      // 步骤卡片悬停效果
+      const steps = document.querySelectorAll('.step');
+      steps.forEach(step => {
+        step.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-4px)';
+        });
+        
+        step.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0)';
+        });
+      });
+    });
+  </script>
+</body>
+</html> 
